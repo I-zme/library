@@ -65,16 +65,34 @@ svg {
   }
 }
 
+/* GENERAL STYLING */
+body {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+}
+
 /* HEADER */
+header {
+  display: flex;
+  align-items: center;
+}
+
 .header-logo {
-  height: 80vh;
-  /* border: 1px solid; */
-  /* border-radius: 30%; */
+  height: 8rem;
+}
+
+header .website-name {
+  font-size: 4rem;
 }
 
 /* FOOTER */
+footer .website-by a {
+  color: inherit;
+  font-weight: 600;
+}
+
 footer ul.credit-list li.credit-item > a {
-  color: black;
+  color: inherit;
   text-decoration: none;
   font-weight: 600;
 }
