@@ -128,12 +128,63 @@ header .website-name {
   align-items: center;
 }
 
+.info-container > p {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  align-items: center;
+}
+
 .info-container .add-book {
   grid-column: 2;
   grid-row: 1/-1;
-  /* justify-self: center; */
   letter-spacing: 0.1em;
   padding: 0.8em 1.5em;
+}
+
+.book-container {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.book {
+  min-height: fit-content;
+  background-color: azure;
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'title title'
+    'author author'
+    'pages pages'
+    'readability readability'
+    'delete edit';
+  gap: 0.5em;
+  align-content: space-around;
+}
+
+.book > .title {
+  grid-area: title;
+  font-weight: 600;
+}
+.book > .author {
+  grid-area: author;
+  font-style: italic;
+}
+.book > .pages {
+  grid-area: pages;
+  font-size: 0.875rem;
+}
+.book > .readability {
+  grid-area: readability;
+}
+.book > .delete {
+  grid-area: delete;
+}
+.book > .edit {
+  grid-area: edit;
 }
 
 /* FOOTER */
