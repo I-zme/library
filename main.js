@@ -12,7 +12,13 @@ function addBookToLibrary() {
 }
 
 const booksContainer = document.querySelector('.book-container');
+
 function createBookHTML({ title, author, pages, read }) {
+  const readDict = {
+    read: 'read',
+    reading: 'reading',
+    'not-read': 'not read',
+  };
   const bookWrapper = document.createElement('div');
   bookWrapper.classList.add('book');
   const titlePara = document.createElement('para');
@@ -25,7 +31,8 @@ function createBookHTML({ title, author, pages, read }) {
   pagesPara.classList.add('pages');
   pagesPara.textContent = `${pages} pages`;
   const readBtn = document.createElement('button');
-  readBtn.classList.add('readability');
+  readBtn.classList.add('readability', read);
+  readBtn.textContent = readDict[read];
   const delBtn = document.createElement('button');
   delBtn.classList.add('delete');
   delBtn.textContent = 'Delete';
@@ -43,3 +50,28 @@ function createBookHTML({ title, author, pages, read }) {
   );
   booksContainer.append(bookWrapper);
 }
+
+// event listeners for book
+const readBtns = document.querySelectorAll('.readability');
+readBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const btnClass = btn.classList[btn.classList.length - 1];
+    switch (btnClass) {
+      case 'read':
+        btn.textContent = 'not read';
+        btn.classList.add('not-read');
+        break;
+      case 'not-read':
+        btn.textContent = 'reading';
+        btn.classList.add('reading');
+        break;
+      case 'reading':
+        btn.textContent = 'read';
+        btn.classList.add('read');
+        break;
+    }
+    btn.classList.remove(btnClass);
+  });
+});
+
+// info container - dynamically enter number of books and their readability

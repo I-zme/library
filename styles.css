@@ -187,6 +187,16 @@ header .website-name {
   grid-area: edit;
 }
 
+.book > .readability.not-read {
+  background-color: rgb(216, 145, 145);
+}
+.book > .readability.reading {
+  background-color: rgb(255, 204, 0);
+}
+.book > .readability.read {
+  background-color: yellowgreen;
+}
+
 /* FOOTER */
 footer {
   padding-bottom: (--padding-layout);
