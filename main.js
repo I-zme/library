@@ -25,15 +25,15 @@ function Book(title, author, pages, readability) {
   this.serial = `bk-${myBooksIndex}`;
 }
 
-// event listeners to pop up the book form for adding books and for closing it on clicking outside
+// event listeners to pop up the book form for adding books and for closing it on clicking outside or on close button
 addBookBtn.addEventListener('click', () => {
   bookForm.toggleAttribute('data-visible');
 });
-
 document.addEventListener('click', (e) => {
   if (bookForm.hasAttribute('data-visible')) {
     if (
       e.target.closest('.book-form button[type="submit"]') ||
+      e.target.closest('button#close') ||
       !(
         e.target.closest('.book-form-container') ||
         e.target.closest('.add-book') ||
