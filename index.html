@@ -32,28 +32,28 @@
                 <button class="delete">Delete</button>
             </div>
         </div>
-        <div class="book-form">
+        <div class="book-form-container">
             <button type="button" id="close">&#x2715;</button>
-            <form action="">
+            <form action="" class="book-form">
                 <div class="form-header">
                     <h2>Enter book details:</h2>
                     <button type="reset">Clear</button>
                 </div>
                 <div>
-                    <label for="bk-title">Title: </label>
-                    <input type="text" name="title" id="bk-title"></input>
+                    <label for="bk-title">Title: <span class="required" aria-label="required">*</span></label>
+                    <input type="text" name="title" id="bk-title" required>
                 </div>
                 <div>
-                    <label for="bk-author">Author: </label>
-                    <input type="text" name="author" id="bk-author">
+                    <label for="bk-author">Author: <span class="required" aria-label="required">*</span></label>
+                    <input type="text" name="author" id="bk-author" required>
                 </div>
                 <div>
-                    <label for="bk-pages">Number of pages: </label>
-                    <input type="number" name="pages" id="bk-pages">
+                    <label for="bk-pages">Number of pages: <span class="required" aria-label="required">*</span></label>
+                    <input type="number" name="pages" id="bk-pages" min="0" max="2000" required>
                 </div>
                 <div>
-                    <label for="bk-readability">Status: </label>
-                    <select name="read-status" id="bk-readability">
+                    <label for="bk-readability">Status: <span class="required" aria-label="required">*</span></label>
+                    <select name="read-status" id="bk-readability" required>
                         <option value="" selected disabled>Select one</option>
                         <option value="not-read">not read</option>
                         <option value="reading">reading</option>
