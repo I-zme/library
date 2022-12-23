@@ -1,7 +1,3 @@
-let readBtns = document.querySelectorAll('.readability');
-let delBtns = document.querySelectorAll('.delete');
-let editBtns = document.querySelectorAll('.edit');
-
 let myLibrary = [];
 let myBooksIndex = 0;
 
@@ -88,7 +84,6 @@ function enterInputDetailsInLibrary(book) {
 }
 
 function enterBookDetailsInHTML(htmlBookDiv, libraryBook) {
-  console.log(htmlBookDiv.querySelector('.title'), libraryBook.title);
   htmlBookDiv.querySelector('.title').textContent = libraryBook.title;
   htmlBookDiv.querySelector('.author').textContent = libraryBook.author;
   htmlBookDiv.querySelector(
@@ -142,23 +137,37 @@ booksContainer.addEventListener('DOMNodeInserted', (e) => {
   }
 });
 
+booksContainer.addEventListener('DOMNodeRemoved', (e) => {
+  if (e.relatedNode.classList.contains('book-container')) {
+    let index = myLibrary.indexOf(
+      myLibrary.find((book) => book.serial === e.target.getAttribute('id'))
+    );
+    myLibrary.splice(index, 1);
+  }
+});
+
 // book buttons event listeners
-function readToggle(btn) {
+function readToggle(btn, book) {
   const btnClass = btn.classList[btn.classList.length - 1];
+  let status;
   switch (btnClass) {
     case 'read':
-      btn.textContent = 'not read';
-      btn.classList.add('not-read');
+      status = 'not-read';
       break;
     case 'not-read':
-      btn.textContent = 'reading';
-      btn.classList.add('reading');
+      status = 'reading';
       break;
+
     case 'reading':
-      btn.textContent = 'read';
-      btn.classList.add('read');
+      status = 'read';
       break;
   }
+
+  btn.textContent = readDict[status];
+  btn.classList.add(status);
+  myLibrary.find(
+    (item) => item.serial === book.getAttribute('id')
+  ).readability = status;
   btn.classList.remove(btnClass);
 }
 
@@ -188,7 +197,7 @@ function addBookListeners(book) {
       } else if (btn.classList.contains('edit')) {
         editToggle(book);
       } else {
-        readToggle(btn);
+        readToggle(btn, book);
       }
     });
   });
