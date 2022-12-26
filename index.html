@@ -16,10 +16,10 @@
     </header>
     <main>
         <div class="info-container">
-            <p>Number of books: <span id="num-total">5</span></p>
-            <p>Read: <span id="num-read">4</span></p>
-            <p>Not read: <span id="num-not-read">1</span></p>
-            <p>Reading: <span id="num-reading">1</span></p>
+            <p>Number of books: <span id="num-total"></span></p>
+            <p>Read: <span id="num-read"></span></p>
+            <p>Not read: <span id="num-not-read"></span></p>
+            <p>Reading: <span id="num-reading"></span></p>
             <button class="add-book" id="add-book">Add Book</button>
         </div>
         <div class="book-container">
@@ -34,14 +34,17 @@
                 <div>
                     <label for="bk-title">Title: <span class="required" aria-label="required">*</span></label>
                     <input type="text" name="title" id="bk-title" required>
+                    <p class="form-validation-msg"></p>
                 </div>
                 <div>
                     <label for="bk-author">Author: <span class="required" aria-label="required">*</span></label>
                     <input type="text" name="author" id="bk-author" required>
+                    <p class="form-validation-msg"></p>
                 </div>
                 <div>
                     <label for="bk-pages">Number of pages: <span class="required" aria-label="required">*</span></label>
-                    <input type="number" name="pages" id="bk-pages" min="0" max="2000" required>
+                    <input type="number" name="pages" id="bk-pages" min="1" max="2000" required>
+                    <p class="form-validation-msg"></p>
                 </div>
                 <div>
                     <label for="bk-readability">Status: <span class="required" aria-label="required">*</span></label>
@@ -51,6 +54,7 @@
                         <option value="reading">reading</option>
                         <option value="read">read</option>
                     </select>
+                    <p class="form-validation-msg"></p>
                 </div>
                 <button type="submit">submit</button>
             </form>

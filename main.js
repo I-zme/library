@@ -10,11 +10,19 @@ const readDict = {
   'not-read': 'not read',
 };
 
+const totalBooks = document.querySelector('#num-total');
+const readBooks = document.querySelector('#num-read');
+const readingBooks = document.querySelector('#num-reading');
+const notreadBooks = document.querySelector('#num-not-read');
+
+// FIXME - IIFE check that it works
 (function () {
   myLibrary.forEach((book) => {
     let newBook = createBookHTML(book);
     addBookListeners(newBook);
   });
+  updateTotalBooks();
+  updateBookStatus();
 })();
 
 function Book(title, author, pages, readability) {
@@ -32,7 +40,7 @@ addBookBtn.addEventListener('click', () => {
 document.addEventListener('click', (e) => {
   if (bookForm.hasAttribute('data-visible')) {
     if (
-      e.target.closest('.book-form button[type="submit"]') ||
+      //   e.target.closest('.book-form button[type="submit"]') ||
       e.target.closest('button#close') ||
       !(
         e.target.closest('.book-form-container') ||
@@ -43,28 +51,59 @@ document.addEventListener('click', (e) => {
       if (bookForm.hasAttribute('data-edit')) {
         bookForm.removeAttribute('data-edit');
       }
-      document.querySelector('.book-form').reset();
-      bookForm.toggleAttribute('data-visible');
+      closenCleanForm();
     }
   }
 });
 
+function closenCleanForm() {
+  document.querySelector('.book-form').reset();
+  bookForm.toggleAttribute('data-visible');
+  clearValidation();
+}
+
 // adding book
+const validationMsgParas = document.querySelectorAll('.form-validation-msg');
+
 document
   .querySelector('.book-form button[type="submit"]')
   .addEventListener('click', (e) => {
-    e.preventDefault();
-    if (bookForm.hasAttribute('data-edit')) {
-      let id = bookForm.getAttribute('data-edit');
-      let bookDiv = document.getElementById(id);
-      const editBook = myLibrary.find((dict) => dict.serial === id);
-      enterInputDetailsInLibrary(editBook);
-      enterBookDetailsInHTML(bookDiv, editBook);
-      bookForm.removeAttribute('data-edit');
-    } else {
-      addBookToLibrary();
+    formArray.forEach((dict) => {
+      validateFormItem(dict.item, dict.errMsg);
+    });
+    const formValidity = Array.from(validationMsgParas).every(
+      (item) => item.getAttribute('data-valid') === 'true'
+    );
+
+    if (!formValidity) return;
+    else {
+      e.preventDefault();
+      if (bookForm.hasAttribute('data-edit')) {
+        let id = bookForm.getAttribute('data-edit');
+        let bookDiv = document.getElementById(id);
+        const editBook = myLibrary.find((dict) => dict.serial === id);
+        enterInputDetailsInLibrary(editBook);
+        enterBookDetailsInHTML(bookDiv, editBook);
+        bookForm.removeAttribute('data-edit');
+      } else {
+        addBookToLibrary();
+      }
+      document.querySelector('.book-form').reset();
+      bookForm.toggleAttribute('data-visible');
+      clearValidation();
     }
   });
+
+document
+  .querySelector('button[type="reset"]')
+  .addEventListener('click', clearValidation);
+
+function clearValidation() {
+  validationMsgParas.forEach((p) => {
+    p.removeAttribute('data-valid');
+    p.textContent = '';
+  });
+}
 
 function addBookToLibrary() {
   const newBook = new Book();
@@ -94,6 +133,56 @@ function enterBookDetailsInHTML(htmlBookDiv, libraryBook) {
   htmlBookDiv
     .querySelector('.readability')
     .classList.add(libraryBook.readability);
+}
+
+// book form validation - since the submit button is operating as a regular button, there is no built in form validation. we have to add it ourselves. For best UX the validation happens as the user enters the details, making it easier to spot and correct errors. thus we'll be using event listeners.
+const formTitle = document.querySelector('.book-form #bk-title');
+const formAuthor = document.querySelector('.book-form #bk-author');
+const formPages = document.querySelector('.book-form #bk-pages');
+const formReadability = document.querySelector('.book-form #bk-readability');
+
+const formArray = [
+  {
+    item: formTitle,
+    errMsg: 'Name must contain 1-100 characters',
+  },
+  {
+    item: formAuthor,
+    errMsg: 'Name must contain 1-100 characters',
+  },
+  {
+    item: formPages,
+    errMsg: 'Number between 1-2000',
+  },
+  {
+    item: formReadability,
+    errMsg: 'Select status',
+  },
+];
+
+formArray.forEach((dict) =>
+  dict.item.addEventListener('focusout', () => {
+    validateFormItem(dict.item, dict.errMsg);
+  })
+);
+
+function validateFormItem(item, errMsg) {
+  const validationMsgPara = item.parentElement.querySelector(
+    '.form-validation-msg'
+  );
+  let validationMessage = '✓';
+  let validationAttributeValue = true;
+  let condition =
+    item === formPages
+      ? Number(formPages.value) < 1 || Number(formPages.value) > 2000
+      : item.value === '';
+
+  if (condition) {
+    validationAttributeValue = false;
+    validationMessage = '✖ ' + errMsg;
+  }
+  validationMsgPara.setAttribute('data-valid', validationAttributeValue);
+  validationMsgPara.textContent = validationMessage;
 }
 
 // function to create the html of a book div with all its information
@@ -134,7 +223,9 @@ function createBookHTML(book) {
 booksContainer.addEventListener('DOMNodeInserted', (e) => {
   if (e.relatedNode.classList.contains('book-container')) {
     addBookListeners(e.target);
+    updateBookStatus();
   }
+  updateTotalBooks();
 });
 
 booksContainer.addEventListener('DOMNodeRemoved', (e) => {
@@ -143,7 +234,9 @@ booksContainer.addEventListener('DOMNodeRemoved', (e) => {
       myLibrary.find((book) => book.serial === e.target.getAttribute('id'))
     );
     myLibrary.splice(index, 1);
+    updateBookStatus();
   }
+  updateTotalBooks();
 });
 
 // book buttons event listeners
@@ -169,6 +262,23 @@ function readToggle(btn, book) {
     (item) => item.serial === book.getAttribute('id')
   ).readability = status;
   btn.classList.remove(btnClass);
+  updateBookStatus();
+}
+
+function updateBookStatus() {
+  displayBooksStatus(readBooks, 'read');
+  displayBooksStatus(notreadBooks, 'not-read');
+  displayBooksStatus(readingBooks, 'reading');
+
+  function displayBooksStatus(spanBook, status) {
+    spanBook.textContent = myLibrary.filter(
+      (book) => book.readability === status
+    ).length;
+  }
+}
+
+function updateTotalBooks() {
+  totalBooks.textContent = myLibrary.length;
 }
 
 function delToggle(book) {
@@ -202,5 +312,3 @@ function addBookListeners(book) {
     });
   });
 }
-
-// info container - dynamically enter number of books and their readability
