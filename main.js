@@ -1,5 +1,13 @@
-let myLibrary = [];
-let myBooksIndex = 0;
+let myLibrary = [
+  {
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    pages: 354,
+    readability: 'read',
+    serial: 'bk-0',
+  },
+];
+let myBooksIndex = 1;
 
 const addBookBtn = document.querySelector('#add-book');
 const bookForm = document.querySelector('.book-form-container');
@@ -15,7 +23,7 @@ const readBooks = document.querySelector('#num-read');
 const readingBooks = document.querySelector('#num-reading');
 const notreadBooks = document.querySelector('#num-not-read');
 
-// FIXME - IIFE check that it works
+// NOTE: if adding books built into the library, remember to update the myBookIndex, otherwise the serial will repeat itself
 (function () {
   myLibrary.forEach((book) => {
     let newBook = createBookHTML(book);
@@ -199,10 +207,10 @@ function createBookHTML(book) {
   const readBtn = document.createElement('button');
   readBtn.classList.add('readability');
   const delBtn = document.createElement('button');
-  delBtn.classList.add('delete');
+  delBtn.classList.add('delete', '|', 'btn-with-bg');
   delBtn.textContent = 'Delete';
   const editBtn = document.createElement('button');
-  editBtn.classList.add('edit');
+  editBtn.classList.add('edit', '|', 'btn-with-bg');
   editBtn.textContent = 'Edit';
 
   bookWrapper.append(
@@ -255,7 +263,6 @@ function readToggle(btn, book) {
       status = 'read';
       break;
   }
-
   btn.textContent = readDict[status];
   btn.classList.add(status);
   myLibrary.find(
