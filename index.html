@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <script src="./main.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500&family=Handlee&family=Just+Another+Hand&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
     <header class="primary-header">
-        <img src="./img/logo.svg" alt="" class="header-logo | logo">
         <h1 class="website-name">My Library List</h1>
-        <button class="log-in">log in</button>
+        <button class="log-in | btn-no-bg">log in</button>
     </header>
     <main>
         <div class="info-container">
@@ -25,11 +25,11 @@
         <div class="book-container">
         </div>
         <div class="book-form-container">
-            <button type="button" id="close">&#x2715;</button>
+            <button type="button" class="btn-no-bg" id="close">&#x2715;</button>
             <form action="" class="book-form">
                 <div class="form-header">
                     <h2>Enter book details:</h2>
-                    <button type="reset">Clear</button>
+                    <button type="reset" class="btn-with-bg">Clear</button>
                 </div>
                 <div>
                     <label for="bk-title">Title: <span class="required" aria-label="required">*</span></label>
@@ -56,23 +56,18 @@
                     </select>
                     <p class="form-validation-msg"></p>
                 </div>
-                <button type="submit">submit</button>
+                <button type="submit" class="btn-with-bg">submit</button>
             </form>
         </div>
     </main>
     <footer>
-        <div class="website-by">Website created by <a href="https://github.com/I-zme">I-zme</a> for <a href="https://www.theodinproject.com">The Odin Project</a></div>
+        <hr>
+        <div class="website-by">Website created by <a href="https://github.com/I-zme" target="_blank">I-zme</a> for <a href="https://www.theodinproject.com" target="_blank">The Odin Project</a></div>
         <h3>Credits</h3>
         <ul class="credit-list">
-            <li> Images:
-                <ul class="visuals-credits">
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/daschhamschta-5552277/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7287039">Sabrina Schmidt</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7287039">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/gdj-1086657/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7344682">Gordon Johnson</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7344682">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/gdj-1086657/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7194292">Gordon Johnson</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7194292">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/gdj-1086657/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7194293">Gordon Johnson</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=7194293">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/clker-free-vector-images-3736/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=308590">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=308590">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/gdj-1086657/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5786062">Gordon Johnson</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5786062">Pixabay</a></li>
-                    <li class="credit-item">Image by <a href="https://pixabay.com/users/gdj-1086657/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6319736">Gordon Johnson</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6319736">Pixabay</a></li>
+            <li> Code Snippets:
+                <ul class="code-credits">
+                    <li class="credit-item">Book border code by <a href="https://codepen.io/andy-set-studio" target="_blank">Andy Bell</a> on codepen</li>
                 </ul>
             </li>
 

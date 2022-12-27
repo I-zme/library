@@ -1,13 +1,28 @@
 :root {
-  --padding-layout: 1rem;
   --rad-400: 15px;
 
+  --size-200: 0.5rem;
   --size-300: 0.875rem;
   --size-400: 1rem;
   --size-500: 1.125rem;
+  --size-600: 1.5rem;
+  --size-700: 2rem;
+  --padding-layout: var(--size-400);
 
   --fs-300: 0.875rem;
   --fs-400: 1rem;
+  --fs-500: 1.5rem;
+
+  --clr-400: hsl(237, 97%, 85%);
+  --clr-600: hsl(239, 70%, 54%);
+  --clr-info: var(--clr-400);
+  --clr-body: var(--clr-600);
+  --clr-main: white;
+
+  --ff-book: 'Handlee', cursive;
+  --ff-body: 'Atma', cursive;
+  --ff-info: var(var(--ff-body));
+  --ff-header: 'Just Another Hand', cursive;
 }
 
 /* GENERAL RESET */
@@ -58,7 +73,6 @@ img,
 picture,
 svg {
   max-width: 100%;
-  /* display: block; */
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
@@ -81,7 +95,8 @@ svg {
 body {
   display: grid;
   grid-template-rows: min-content auto min-content;
-  background-color: rgb(214, 240, 189);
+  background-color: var(--clr-body);
+  font-family: var(--ff-body);
 }
 
 header,
@@ -89,7 +104,7 @@ main,
 footer {
   width: clamp(300px, 90%, 1000px);
   margin: 0 auto;
-  background-color: hsla(0, 100%, 100%, 0.6);
+  background-color: var(--clr-main);
 }
 
 header,
@@ -107,17 +122,15 @@ header {
   position: relative;
 }
 
-.header-logo {
-  height: clamp(80px, 15vw, 150px);
-  margin-left: auto;
-}
-
 header .website-name {
   font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--ff-header);
+  margin-left: auto;
 }
 
 .log-in {
   margin-right: 1rem;
+  margin-left: auto;
 }
 
 /* MAIN */
@@ -125,26 +138,28 @@ header .website-name {
 /* INFO CONTAINER */
 .info-container {
   width: min(800px, 80%);
-  background-color: grey;
+  background-color: var(--clr-info);
   margin: 0 auto;
-  padding: 1em clamp(1rem, 5vw, 4rem);
+  padding: 1em clamp(var(--size-400), 5vw, 4rem);
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: var(--size-400);
   align-items: center;
   border-radius: var(--rad-400);
+  font-family: var(--ff-info);
 }
 
 .info-container > p {
+  --_margin-size: var(--size-600);
   display: flex;
   align-items: center;
-  margin: 0 1.5rem;
+  margin: 0 var(--_margin-size);
 }
 
 .info-container p span {
   margin-left: auto;
-  margin-right: 1.5rem;
+  margin-right: var(--_margin-size);
 }
 
 .info-container .add-book {
@@ -153,22 +168,29 @@ header .website-name {
   letter-spacing: 0.1em;
   padding: 0.8em 1.5em;
   border-radius: var(--rad-400);
-  border: none;
+  border: groove;
+  background-color: var(--clr-main);
+  cursor: pointer;
+}
+
+.info-container .add-book:hover {
+  font-weight: 600;
 }
 
 .book-container {
+  --_bk-min-size: 200px;
   display: grid;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: var(--size-600);
+  padding: var(--size-700);
   justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  min-height: 300px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--_bk-min-size), 1fr));
+  min-height: calc(var(--_bk-min-size) * 3 / 2);
 }
 
 .book {
   min-height: fit-content;
-  background-color: azure;
-  padding: 1em;
+  background-color: var(--clr-bk);
+  padding: var(--size-400);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
@@ -177,14 +199,35 @@ header .website-name {
     'pages pages'
     'readability readability'
     'delete edit';
-  gap: 0.5em;
+  gap: var(--size-200);
   align-content: space-around;
+  font-family: var(--ff-book);
+
+  /* the following code, plus the ::before snippets are based on Andy Bell's codepen */
+  border: 1px solid #333333;
+  border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+  position: relative;
+  z-index: 2;
+}
+
+.book::before {
+  content: '';
+  border: 1px solid #353535;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+  border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  z-index: -1;
 }
 
 .book > .title {
   grid-area: title;
   font-weight: 600;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
 }
 
 .book > .author {
@@ -206,6 +249,8 @@ header .website-name {
 }
 .book > .readability {
   grid-area: readability;
+  cursor: pointer;
+  border: 1px solid;
 }
 .book > .delete {
   grid-area: delete;
@@ -215,13 +260,13 @@ header .website-name {
 }
 
 .book > .readability.not-read {
-  background-color: rgb(216, 145, 145);
+  background-color: hsl(333, 100%, 64%);
 }
 .book > .readability.reading {
-  background-color: rgb(255, 204, 0);
+  background-color: hsl(59, 100%, 75%);
 }
 .book > .readability.read {
-  background-color: yellowgreen;
+  background-color: hsl(164, 93%, 34%);
 }
 
 /* add book form div */
@@ -233,9 +278,10 @@ header .website-name {
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 2rem 1rem;
+  padding: var(--size-700) var(--size-400);
+  background-color: var(--clr-main);
   box-shadow: 0 0 10px black;
+  z-index: 10;
 }
 
 .book-form-container[data-visible] {
@@ -253,10 +299,7 @@ header .website-name {
 }
 
 .book-form-container h2 {
-  font-size: 1.5rem;
-}
-.book-form-container button[type='reset'] {
-  padding: 0.1em 1em;
+  font-size: var(--fs-500);
 }
 
 .book-form-container div.form-header {
@@ -270,7 +313,7 @@ header .website-name {
   display: grid;
   grid-template-columns: auto var(--_input-width);
   grid-auto-rows: max-content;
-  gap: 0.1rem 0.5rem;
+  gap: 0.1rem var(--size-200);
   align-items: center;
 }
 
@@ -284,11 +327,7 @@ header .website-name {
 }
 
 .book-form-container button#close {
-  background-color: inherit;
-  border: none;
-  cursor: pointer;
   font-size: var(--size-500);
-  font-weight: 600;
   position: absolute;
   top: 2%;
   right: 2%;
@@ -313,17 +352,61 @@ header .website-name {
 /* FOOTER */
 footer {
   padding-bottom: (--padding-layout);
+  padding: var(--size-700);
 }
 
-footer .website-by a {
+footer > hr {
+  margin-bottom: var(--size-400);
+}
+footer > h3 {
+  font-size: var(--fs-500);
+}
+
+.website-by {
+  text-align: center;
+}
+
+footer ul.credit-list li.credit-item > a,
+.website-by a {
   color: inherit;
   font-weight: 600;
-}
-
-footer ul.credit-list li.credit-item > a {
-  color: inherit;
   text-decoration: none;
+}
+
+footer ul.credit-list {
+  list-style-position: inside;
+}
+footer ul.credit-list > li {
+  list-style-type: none;
+}
+
+/* utilities */
+.btn-no-bg {
+  background: inherit;
+  border: none;
   font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-no-bg:hover {
+  scale: 1.2;
+}
+
+.btn-no-bg:active {
+  color: var(--clr-body);
+}
+
+.btn-with-bg {
+  border: none;
+  cursor: pointer;
+  padding: 0.1em 1em;
+}
+
+.btn-with-bg:hover {
+  background-color: hsl(0, 0%, 74%);
+}
+.btn-with-bg:active {
+  background-color: hsl(0, 0%, 54%);
 }
 
 /* MEDIA QUERIES */
@@ -346,7 +429,7 @@ footer ul.credit-list li.credit-item > a {
     justify-items: center;
   }
 
-  header .header-logo,
+  header .website-name,
   header .log-in {
     margin: 0;
   }
