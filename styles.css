@@ -221,6 +221,8 @@ header .website-name {
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+  -moz-transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
   border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
   z-index: -1;
 }
@@ -280,6 +282,7 @@ header .website-name {
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
   padding: var(--size-700) var(--size-400);
   background-color: var(--clr-main);
   box-shadow: 0 0 10px black;
