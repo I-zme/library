@@ -325,6 +325,7 @@ header .website-name {
 .book-form-container input,
 .book-form-container select {
   max-width: var(--_input-width);
+  color: black;
 }
 
 .book-form-container div input#bk-pages {
